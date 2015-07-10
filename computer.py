@@ -7,6 +7,9 @@ class Computer:
         self.player = player
 
     def potential_enemy_win_horizontal(self, matrix):
+        """Проверява за потенциалена победа на противника в хоризонтална позиция.
+        Ако такъв ход не  съществува връща кортеж (-1, -1).
+        Ако има такава вероятност връща позиция за ход"""
         for i in range(0, len(matrix)):
             for j in range(0, len(matrix[i]) - 3):
                 if matrix[i][j] != self.player and matrix[i][j] != Table.EMPTY:
@@ -17,6 +20,9 @@ class Computer:
         return (-1, -1)
 
     def potential_enemy_win_vertical(self, matrix):
+        """Проверява за потенциалена победа  на противника в вертиаклна вертикална.
+        Ако такъв ход не  съществува връща кортеж (-1, -1).
+        Ако има такава вероятност връща позиция за ход"""
         for i in range(0, len(matrix[0])):
             for j in range(0, len(matrix) - 3):
                 if matrix[j][i] != self.player and matrix[j][i] != Table.EMPTY:
@@ -27,6 +33,9 @@ class Computer:
         return (-1, -1)
 
     def potential_player_win_horizontal(self, matrix):
+        """Проверява за потенциалена победа на компютъра в хоризонтална позиция.
+        Ако такъв ход не  съществува връща кортеж (-1, -1).
+        Ако има такава вероятност връща позиция за ход"""
         for i in range(0, len(matrix)):
             for j in range(0, len(matrix[i]) - 3):
                 if matrix[i][j] == self.player:
@@ -37,6 +46,9 @@ class Computer:
         return (-1, -1)
 
     def potential_player_win_vertical(self, matrix):
+        """Проверява за потенциалена победа на компютъра в вертикална позиция.
+        Ако такъв ход не  съществува връща кортеж (-1, -1).
+        Ако има такава вероятност връща позиция за ход"""
         for i in range(0, len(matrix[0])):
             for j in range(0, len(matrix) - 3):
                 if matrix[j][i] == self.player:
@@ -47,6 +59,10 @@ class Computer:
         return (-1, -1)
 
     def potential_player_win_first_diagonal(self, matrix):
+        """Проверява за потенциалена победа на компютъра по диагонала.
+        Ако такъв ход не  съществува връща кортеж (-1, -1).
+        Ако има такава вероятност връща позиция за ход
+        """
         for i in range(1, len(matrix) - 2):
             for j in range(1, len(matrix[i]) - 2):
                 if matrix[i][j] == self.player:
@@ -57,6 +73,9 @@ class Computer:
         return (-1, -1)
 
     def get_turn(self, matrix):
+        """
+        Връща ход на компутъра
+        """
         if self.potential_enemy_win_vertical(matrix)[0] != -1:
             print(1)
             return self.potential_enemy_win_vertical(matrix)[1]

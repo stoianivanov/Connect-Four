@@ -2,10 +2,9 @@ import copy
 import random
 import sys
 
-from turn import ComputerTurn, Turn, HummanTurn
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from PyQt5.QtWidgets import (QApplication, QFrame, QGridLayout, QLabel,
+from PyQt5.QtWidgets import (QApplication, QGridLayout, QLabel,
         QLCDNumber, QPushButton, QWidget)
 
 from PySide.QtCore import *
@@ -139,6 +138,8 @@ class TableWindow(QWidget):
         self.resize(550, 450)
 
     def adding_to_vector(self):
+        """Добавя бутоните към масив от позициите
+        на който може да се постави елемента"""
         self.cols.append(self.col_one_edit)
         self.cols.append(self.col_two_edit)
         self.cols.append(self.col_three_edit)
@@ -151,6 +152,9 @@ class TableWindow(QWidget):
         self.cols.append(self.col_ten_edit)
 
     def read_table(self):
+        """Прочита таблицата от Table и я попълва в UI-a.
+        Ако има победител, пуска нов прозер.
+        """
         result = ""
         i = 0
         for col in self.cols:
@@ -163,13 +167,14 @@ class TableWindow(QWidget):
             self.win_dialog.show()
 
     def first_button_clicked(self):
+        """Метод, който се извиква при натискането на първия бутон.
+        Извършва ход в играта на позиция 0.
+        """
         if self.onTurn == 1:
             self.t.commit_turn(0, "R")
 
             if self.vsPC:
                 pos = self.pc.get_turn(self.t.matrix)
-                print(pos)
-                print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
                 self.t.commit_turn(pos, "B")
             else:
                 self.onTurn = 2
@@ -181,6 +186,9 @@ class TableWindow(QWidget):
         self.read_table()
 
     def second_button_clicked(self):
+        """Метод, който се извиква при натискането на втория бутон.
+        Извършва ход в играта на позиция 1.
+        """
         if self.onTurn == 1:
             self.t.commit_turn(1, "R")
             if self.vsPC:
@@ -196,6 +204,9 @@ class TableWindow(QWidget):
         self.read_table()
 
     def third_button_clicked(self):
+        """Метод, който се извиква при натискането на третия бутон.
+        Извършва ход в играта на позиция 2.
+        """
         if self.onTurn == 1:
             self.t.commit_turn(2, "R")
             if self.vsPC:
@@ -211,6 +222,9 @@ class TableWindow(QWidget):
         self.read_table()
 
     def four_button_clicked(self):
+        """Метод, който се извиква при натискането на четвътия бутон.
+        Извършва ход в играта на позиция 3.
+        """
         if self.onTurn == 1:
             self.t.commit_turn(3, "R")
             if self.vsPC:
@@ -226,6 +240,9 @@ class TableWindow(QWidget):
         self.read_table()
 
     def five_button_clicked(self):
+        """Метод, който се извиква при натискането на петия бутон.
+        Извършва ход в играта на позиция 4.
+        """
         if self.onTurn == 1:
             self.t.commit_turn(4, "R")
             if self.vsPC:
@@ -241,6 +258,9 @@ class TableWindow(QWidget):
         self.read_table()
 
     def six_button_clicked(self):
+        """Метод, който се извиква при натискането на шестия бутон.
+        Извършва ход в играта на позиция 5.
+        """
         if self.onTurn == 1:
             self.t.commit_turn(5, "R")
             if self.vsPC:
@@ -256,6 +276,9 @@ class TableWindow(QWidget):
         self.read_table()
 
     def seven_button_clicked(self):
+        """Метод, който се извиква при натискането на седмия бутон.
+        Извършва ход в играта на позиция 6.
+        """
         if self.onTurn == 1:
             self.t.commit_turn(6, "R")
             if self.vsPC:
@@ -271,6 +294,9 @@ class TableWindow(QWidget):
         self.read_table()
 
     def eigth_button_clicked(self):
+        """Метод, който се извиква при натискането на осмият бутон.
+        Извършва ход в играта на позиция 7.
+        """
         if self.onTurn == 1:
             self.t.commit_turn(7, "R")
             if self.vsPC:
@@ -286,6 +312,9 @@ class TableWindow(QWidget):
         self.read_table()
 
     def nine_button_clicked(self):
+        """Метод, който се извиква при натискането на деветия бутон.
+        Извършва ход в играта на позиция 8.
+        """
         if self.onTurn == 1:
             self.t.commit_turn(8, "R")
             if self.vsPC:
@@ -301,6 +330,9 @@ class TableWindow(QWidget):
         self.read_table()
 
     def ten_button_clicked(self):
+        """Метод, който се извиква при натискането на десетия бутон.
+        Извършва ход в играта на позиция 9.
+        """
         if self.onTurn == 1:
             self.t.commit_turn(9, "R")
             if self.vsPC:
