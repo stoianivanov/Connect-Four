@@ -140,12 +140,22 @@ class TableTest(unittest.TestCase):
 
     def test_first_diagonal_win(self):
         matrix = [
-            ["R", "E", "E", "R"],
+            ["R", "E", "E", "E"],
             ["R", "R", "R", "E"],
             ["E", "R", "R", "E"],
             ["R", "E", "R", "R"],
         ]
         self.table.matrix = matrix
         self.assertEqual(self.table.first_diagonal_win()[0], True)
+
+    def test_second_diagonal_win(self):
+        matrix = [
+            ["E", "E", "E", "R"],
+            ["R", "E", "R", "E"],
+            ["E", "R", "R", "E"],
+            ["R", "E", "R", "R"],
+        ]
+        self.table.matrix = matrix
+        self.assertEqual(self.table.second_diagonal_win()[0], True)
 if __name__ == '__main__':
     unittest.main()

@@ -137,23 +137,14 @@ class Table:
         Ако има връща кортеж с знак, че има победител и кой е победитея.
         Ако не връща кортеж, с False и празна позиция
         """
-        counter = 1
-        for i in range(3, len(self.matrix)):
+        for i in range(0, len(self.matrix) - 3):
             for j in range(0, len(self.matrix[i]) - 3):
                 if self.matrix[j][i] != self.EMPTY:
-                    cur_i = i + 1
-                    cur_j = j + 1
-                    if not(cur_i >= self.RANGE[0] or cur_j >= self.RANGE[1]):
-                        for k in range(0, 4):
-                            if self.matrix[i][j] == self.matrix[cur_i][cur_j]:
-                                counter = counter + 1
-                                cur_i -= 1
-                                cur_j += 1
-                            else:
-                                counter = 1
-                                break
-                            if counter == 4:
-                                return (True, self.matrix[j][i])
+                    first = self.matrix[j][i] == self.matrix[j + 1][i + 1]
+                    second = self.matrix[j][i] == self.matrix[j + 2][i + 2]
+                    third = self.matrix[j][i] == self.matrix[j + 3][i + 3]
+                    if first and second and third:
+                        return (True, self.matrix[j][i])
         return (False, self.EMPTY)
 
     def second_diagonal_win(self):
@@ -162,21 +153,13 @@ class Table:
         Ако има връща кортеж с знак, че има победител и кой е победитея.
         Ако не връща кортеж, с False и празна позиция
         """
-        counter = 1
         for i in range(0, len(self.matrix) - 3):
-            for j in range(0, len(self.matrix[i]) - 3):
+            for j in range(3, len(self.matrix[i])):
                 if self.matrix[i][j] != self.EMPTY:
-                    cur_i = i + 1
-                    cur_j = j + 1
-                    if not(cur_i >= self.RANGE[0] or cur_j >= self.RANGE[1]):
-                        for k in range(0, 4):
-                            if self.matrix[i][j] == self.matrix[cur_i][cur_j]:
-                                counter = counter + 1
-                                cur_i += 1
-                                cur_j += 1
-                            else:
-                                counter = 1
-                                break
-                            if counter == 4:
-                                return (True, self.matrix[i][j])
+                    first = self.matrix[i][j] == self.matrix[i + 1][j - 1]
+                    second = self.matrix[i][j] == self.matrix[i + 2][j - 2]
+                    third = self.matrix[i][j] == self.matrix[i + 3][j - 3]
+                    if first and second and third:
+
+                        return (True, self.matrix[i][j])
         return (False, self.EMPTY)
