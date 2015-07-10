@@ -1,6 +1,6 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from PyQt5.QtWidgets import (QApplication, QFrame, QGridLayout, QLabel,
+from PyQt5.QtWidgets import (QApplication, QGridLayout, QLabel,
         QLCDNumber, QPushButton, QWidget)
 
 from PySide.QtCore import *
@@ -8,6 +8,9 @@ from PySide.QtGui import *
 
 
 class WinDialog(QWidget):
+    """
+    Стартира се когато някой спечели.
+    """
     def __init__(self):
 
         super(WinDialog, self).__init__()

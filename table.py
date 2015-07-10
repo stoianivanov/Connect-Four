@@ -59,16 +59,12 @@ class Table:
         Връща победителя в играта.
         """
         if self.horizontal_win()[0] == True:
-            print ("horizontal_win")
             return self.horizontal_win()[1]
         if self.vertical_win()[0] == True:
-            print ("vertical_winr")
             return self.vertical_win()[1]
         if self.first_diagonal_win()[0] == True:
-            print ("first_diagonal_win")
             return self.first_diagonal_win()[1]
         if self.second_diagonal_win()[0] == True:
-            print("second_diagonal_win")
             return self.second_diagonal_win()[1]
         return self.EMPTY
 
@@ -97,7 +93,6 @@ class Table:
             return False
         else:
             if self.has_winner():
-                print (self.get_winner())
                 return True
             else:
                 self.make_turn(col, color)

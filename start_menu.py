@@ -11,6 +11,10 @@ from connect_four import TableWindow, Table
 
 
 class StartGame(QWidget):
+    """
+    Главния прозорец в играта.
+    Предоставя възможност за игра срешу човек и игра срещу компютър.
+    """
     def __init__(self):
 
         super(StartGame, self).__init__()
