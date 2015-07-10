@@ -16,6 +16,9 @@ from computer import Computer
 
 
 class TableWindow(QWidget):
+    """
+    Визуализира играта.
+    """
     def __init__(self):
 
         super(TableWindow, self).__init__()
