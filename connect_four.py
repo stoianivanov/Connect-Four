@@ -31,6 +31,7 @@ class TableWindow(QWidget):
         self.compuret_win = ComputerWinDialog()
 
         self.first_player_time = Timer()
+        self.first_player_time.start()
 
         self.col_one_edit = QTextEdit()
         self.col_one_edit.setReadOnly(True)
@@ -70,6 +71,12 @@ class TableWindow(QWidget):
 
         self.player = QLabel()
         self.player.setText("R")
+
+        self.player_time = QLabel()
+        self.player_time.setText("Time player R:")
+
+        self.player_game_time = QLabel()
+        self.player_game_time.setText(" ")
 
         self.adding_to_vector()
         self.onTurn = 1
@@ -140,6 +147,8 @@ class TableWindow(QWidget):
         layout.addWidget(self.col_ten_edit, 1, 9)
         layout.addWidget(label_on_turn, 2, 0)
         layout.addWidget(self.player, 2, 1)
+        layout.addWidget(self.player_time, 2, 2)
+        layout.addWidget(self.player_game_time, 2, 3)
 
         self.setLayout(layout)
 
@@ -175,6 +184,7 @@ class TableWindow(QWidget):
         if self.t.has_winner():
             if self.t.get_winner() == Table.RED:
                 print(self.first_player_time.stop())
+                self.player_game_time.setText(str(self.first_player_time.stop()))
                 self.win_dialog.show()
             else:
                 self.compuret_win.show()
