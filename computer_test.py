@@ -96,26 +96,24 @@ class ComputerTest(unittest.TestCase):
         self.assertEqual(self.pc.potential_player_win_first_diagonal(
             matrix), (-1, -1))
 
-    def test_potential_player_win_second_diagonal(self):
-        matrix = [
-            ["E", "E", "E", "E", "E", "E", "E"],
-            ["E", "E", "B", "R", "R", "E", "E"],
-            ["R", "E", "E", "B", "E", "E", "E"],
-            ["E", "B", "R", "R", "B", "B", "E"]
-        ]
-        self.assertEqual(self.pc.potential_player_win_first_diagonal(
-            matrix), (0, 1))
-
-    def test_potential_player_not_win_second_diagonal(self):
+    def test_get_turn_with_series_of_two_vertical(self):
         matrix = [
             ["E", "E", "E", "E", "E", "E", "E"],
             ["E", "E", "E", "E", "E", "E", "E"],
-            ["R", "E", "E", "E", "E", "E", "E"],
-            ["E", "B", "R", "R", "E", "B", "E"]
+            ["E", "E", "E", "E", "R", "E", "E"],
+            ["E", "E", "E", "E", "R", "E", "E"]
         ]
-        self.assertEqual(self.pc.potential_player_win_first_diagonal(
-            matrix), (-1, -1))
+        self.assertEqual(self.pc.get_turn_with_series_of_two_vertical(
+            matrix), (1, 4))
 
-
+    def test_get_turn_with_series_of_two_horizontal(self):
+        matrix = [
+            ["E", "E", "E", "E", "E", "E", "E"],
+            ["E", "E", "E", "E", "E", "E", "E"],
+            ["E", "E", "E", "E", "E", "E", "E"],
+            ["E", "E", "E", "R", "R", "E", "E"]
+        ]
+        self.assertEqual(self.pc.get_turn_with_series_of_two_horizontal(
+            matrix), (3, 2))
 if __name__ == '__main__':
     unittest.main()

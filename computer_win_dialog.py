@@ -7,15 +7,15 @@ from PySide.QtCore import *
 from PySide.QtGui import *
 
 
-class WinDialog(QWidget):
+class ComputerWinDialog(QWidget):
     """
-    Стартира се когато някой спечели.
+    Стартира се когато компютъра спечели.
     """
     def __init__(self):
 
-        super(WinDialog, self).__init__()
+        super(ComputerWinDialog, self).__init__()
         self.label = QLabel()
-        text = "YOU WIN"
+        text = "Computer WIN"
         self.label.setText(text)
         layout = QGridLayout()
         layout.addWidget(self.label, 0, 1)

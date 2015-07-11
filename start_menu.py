@@ -40,6 +40,7 @@ class StartGame(QWidget):
         self.table_window.vsPC = False
         self.table_window.show()
 
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = StartGame()

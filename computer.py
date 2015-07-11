@@ -24,7 +24,7 @@ class Computer:
         Ако такъв ход не  съществува връща кортеж (-1, -1).
         Ако има такава вероятност връща позиция за ход"""
         for i in range(0, len(matrix[0])):
-            for j in range(0, len(matrix) - 3):
+            for j in range(0, len(matrix) - 2):
                 if matrix[j][i] != self.player and matrix[j][i] != Table.EMPTY:
                     b1 = matrix[j][i] == matrix[j + 1][i]
                     b2 = matrix[j][i] == matrix[j + 2][i]
@@ -65,11 +65,33 @@ class Computer:
         """
         for i in range(1, len(matrix) - 2):
             for j in range(1, len(matrix[i]) - 2):
-                if matrix[i][j] == self.player:
-                    b1 = matrix[i][j] = matrix[i + 1][j + 1]
-                    b2 = matrix[i][j] = matrix[i + 2][j + 2]
+                if matrix[i][j] == self.player and matrix[i][j] != Table.EMPTY:
+                    b1 = matrix[i][j] == matrix[i + 1][j + 1]
+                    b2 = matrix[i][j] == matrix[i + 2][j + 2]
                     if b1 and b2:
                         return (i-1, j-1)
+        return (-1, -1)
+
+    def get_turn_with_series_of_two_vertical(self, matrix):
+        """
+        Проверява дали има два поредни пула и слага до тях
+        """
+        for i in range(0, len(matrix) - 1):
+            for j in range(0, len(matrix[i])):
+                if matrix[i][j] != self.player and matrix[i][j] != Table.EMPTY:
+                    if matrix[i][j] == matrix[i + 1][j]:
+                        return (i - 1, j)
+        return (-1, -1)
+
+    def get_turn_with_series_of_two_horizontal(self, matrix):
+        """
+        Проверява дали има два поредни пула и слага до тях
+        """
+        for i in range(0, len(matrix)):
+            for j in range(0, len(matrix[i]) - 1):
+                if matrix[i][j] != self.player and matrix[i][j] != Table.EMPTY:
+                    if matrix[i][j] == matrix[i][j + 1]:
+                        return (i, j - 1)
         return (-1, -1)
 
     def get_turn(self, matrix):
@@ -92,6 +114,12 @@ class Computer:
         elif self.potential_player_win_first_diagonal(matrix)[0] != -1:
             print(5)
             return self.potential_player_win_first_diagonal(matrix)[1]
+        elif self.get_turn_with_series_of_two_vertical(matrix)[0] != -1:
+            print(8)
+            return self.get_turn_with_series_of_two_vertical(matrix)[1]
+        elif self.get_turn_with_series_of_two_horizontal(matrix)[0] != -1:
+            print(9)
+            return self.get_turn_with_series_of_two_horizontal(matrix)[1]
         else:
             print(7)
             return random.randint(0, len(matrix) - 1)

@@ -10,9 +10,11 @@ from PyQt5.QtWidgets import (QApplication, QGridLayout, QLabel,
 from PySide.QtCore import *
 from PySide.QtGui import *
 
-from win_dialog import *
+from win_dialog import WinDialog
+from computer_win_dialog import ComputerWinDialog
 from table import Table
 from computer import Computer
+from timer import Timer
 
 
 class TableWindow(QWidget):
@@ -26,6 +28,10 @@ class TableWindow(QWidget):
         self.pc = Computer("B")
         self.vsPC = True
         self.win_dialog = WinDialog()
+        self.compuret_win = ComputerWinDialog()
+
+        self.first_player_time = Timer()
+
         self.col_one_edit = QTextEdit()
         self.col_one_edit.setReadOnly(True)
 
@@ -83,45 +89,45 @@ class TableWindow(QWidget):
         thirdButton.setFocusPolicy(Qt.NoFocus)
         thirdButton.clicked.connect(self.third_button_clicked)
 
-        fourButton = QPushButton("&")
-        fourButton.setFocusPolicy(Qt.NoFocus)
-        fourButton.clicked.connect(self.four_button_clicked)
+        fourthButton = QPushButton("&")
+        fourthButton.setFocusPolicy(Qt.NoFocus)
+        fourthButton.clicked.connect(self.fourth_button_clicked)
 
-        fiveButton = QPushButton("&")
-        fiveButton.setFocusPolicy(Qt.NoFocus)
-        fiveButton.clicked.connect(self.five_button_clicked)
+        fifthButton = QPushButton("&")
+        fifthButton.setFocusPolicy(Qt.NoFocus)
+        fifthButton.clicked.connect(self.fifth_button_clicked)
 
-        sixButton = QPushButton("&")
-        sixButton.setFocusPolicy(Qt.NoFocus)
-        sixButton.clicked.connect(self.six_button_clicked)
+        sixthButton = QPushButton("&")
+        sixthButton.setFocusPolicy(Qt.NoFocus)
+        sixthButton.clicked.connect(self.sixth_button_clicked)
 
-        sevenButton = QPushButton("&")
-        sevenButton.setFocusPolicy(Qt.NoFocus)
-        sevenButton.clicked.connect(self.seven_button_clicked)
+        seventhButton = QPushButton("&")
+        seventhButton.setFocusPolicy(Qt.NoFocus)
+        seventhButton.clicked.connect(self.seventh_button_clicked)
 
-        eigthButton = QPushButton("&")
-        eigthButton.setFocusPolicy(Qt.NoFocus)
-        eigthButton.clicked.connect(self.eigth_button_clicked)
+        eighthButton = QPushButton("&")
+        eighthButton.setFocusPolicy(Qt.NoFocus)
+        eighthButton.clicked.connect(self.eighth_button_clicked)
 
-        nineButton = QPushButton("&")
-        nineButton.setFocusPolicy(Qt.NoFocus)
-        nineButton.clicked.connect(self.nine_button_clicked)
+        ninthButton = QPushButton("&")
+        ninthButton.setFocusPolicy(Qt.NoFocus)
+        ninthButton.clicked.connect(self.ninth_button_clicked)
 
-        tenButton = QPushButton("&")
-        tenButton.setFocusPolicy(Qt.NoFocus)
-        tenButton.clicked.connect(self.ten_button_clicked)
+        tenthButton = QPushButton("&")
+        tenthButton.setFocusPolicy(Qt.NoFocus)
+        tenthButton.clicked.connect(self.tenth_button_clicked)
 
         layout = QGridLayout()
         layout.addWidget(firstButton, 0, 0)
         layout.addWidget(secondButton, 0, 1)
         layout.addWidget(thirdButton, 0, 2)
-        layout.addWidget(fourButton, 0, 3)
-        layout.addWidget(fiveButton, 0, 4)
-        layout.addWidget(sixButton, 0, 5)
-        layout.addWidget(sevenButton, 0, 6)
-        layout.addWidget(eigthButton, 0, 7)
-        layout.addWidget(nineButton, 0, 8)
-        layout.addWidget(tenButton, 0, 9)
+        layout.addWidget(fourthButton, 0, 3)
+        layout.addWidget(fifthButton, 0, 4)
+        layout.addWidget(sixthButton, 0, 5)
+        layout.addWidget(seventhButton, 0, 6)
+        layout.addWidget(eighthButton, 0, 7)
+        layout.addWidget(ninthButton, 0, 8)
+        layout.addWidget(tenthButton, 0, 9)
         layout.addWidget(self.col_one_edit, 1, 0)
         layout.addWidget(self.col_two_edit, 1, 1)
         layout.addWidget(self.col_three_edit, 1, 2)
@@ -167,7 +173,11 @@ class TableWindow(QWidget):
             col.setText(result)
             result = ""
         if self.t.has_winner():
-            self.win_dialog.show()
+            if self.t.get_winner() == Table.RED:
+                print(self.first_player_time.stop())
+                self.win_dialog.show()
+            else:
+                self.compuret_win.show()
 
     def first_button_clicked(self):
         """Метод, който се извиква при натискането на първия бутон.
@@ -175,10 +185,11 @@ class TableWindow(QWidget):
         """
         if self.onTurn == 1:
             self.t.commit_turn(0, "R")
-
+            self.first_player_time.sleep()
             if self.vsPC:
                 pos = self.pc.get_turn(self.t.matrix)
                 self.t.commit_turn(pos, "B")
+                self.first_player_time.start()
             else:
                 self.onTurn = 2
                 self.player.setText("B")
@@ -186,6 +197,7 @@ class TableWindow(QWidget):
             self.t.commit_turn(0, "B")
             self.player.setText("R")
             self.onTurn = 1
+            self.first_player_time.start()
         self.read_table()
 
     def second_button_clicked(self):
@@ -194,9 +206,11 @@ class TableWindow(QWidget):
         """
         if self.onTurn == 1:
             self.t.commit_turn(1, "R")
+            self.first_player_time.sleep()
             if self.vsPC:
                 self.t.commit_turn(self.pc.get_turn(
                     self.t.matrix), "B")
+                self.first_player_time.start()
             else:
                 self.onTurn = 2
                 self.player.setText("B")
@@ -204,6 +218,7 @@ class TableWindow(QWidget):
             self.t.commit_turn(1, "B")
             self.player.setText("R")
             self.onTurn = 1
+            self.first_player_time.start()
         self.read_table()
 
     def third_button_clicked(self):
@@ -212,9 +227,11 @@ class TableWindow(QWidget):
         """
         if self.onTurn == 1:
             self.t.commit_turn(2, "R")
+            self.first_player_time.sleep()
             if self.vsPC:
                 self.t.commit_turn(self.pc.get_turn(
                     self.t.matrix), "B")
+                self.first_player_time.start()
             else:
                 self.onTurn = 2
                 self.player.setText("B")
@@ -222,17 +239,20 @@ class TableWindow(QWidget):
             self.t.commit_turn(2, "B")
             self.player.setText("R")
             self.onTurn = 1
+            self.first_player_time.start()
         self.read_table()
 
-    def four_button_clicked(self):
+    def fourth_button_clicked(self):
         """Метод, който се извиква при натискането на четвътия бутон.
         Извършва ход в играта на позиция 3.
         """
         if self.onTurn == 1:
             self.t.commit_turn(3, "R")
+            self.first_player_time.sleep()
             if self.vsPC:
                 self.t.commit_turn(self.pc.get_turn(
                     self.t.matrix), "B")
+                self.first_player_time.start()
             else:
                 self.onTurn = 2
                 self.player.setText("B")
@@ -240,17 +260,20 @@ class TableWindow(QWidget):
             self.t.commit_turn(3, "B")
             self.player.setText("R")
             self.onTurn = 1
+            self.first_player_time.start()
         self.read_table()
 
-    def five_button_clicked(self):
+    def fifth_button_clicked(self):
         """Метод, който се извиква при натискането на петия бутон.
         Извършва ход в играта на позиция 4.
         """
         if self.onTurn == 1:
             self.t.commit_turn(4, "R")
+            self.first_player_time.sleep()
             if self.vsPC:
                 self.t.commit_turn(self.pc.get_turn(
                     self.t.matrix), "B")
+                self.first_player_time.start()
             else:
                 self.onTurn = 2
                 self.player.setText("B")
@@ -258,17 +281,20 @@ class TableWindow(QWidget):
             self.t.commit_turn(4, "B")
             self.player.setText("R")
             self.onTurn = 1
+            self.first_player_time.start()
         self.read_table()
 
-    def six_button_clicked(self):
+    def sixth_button_clicked(self):
         """Метод, който се извиква при натискането на шестия бутон.
         Извършва ход в играта на позиция 5.
         """
         if self.onTurn == 1:
             self.t.commit_turn(5, "R")
+            self.first_player_time.sleep()
             if self.vsPC:
                 self.t.commit_turn(self.pc.get_turn(
                     self.t.matrix), "B")
+                self.first_player_time.start()
             else:
                 self.onTurn = 2
                 self.player.setText("B")
@@ -276,17 +302,20 @@ class TableWindow(QWidget):
             self.t.commit_turn(5, "B")
             self.player.setText("R")
             self.onTurn = 1
+            self.first_player_time.start()
         self.read_table()
 
-    def seven_button_clicked(self):
+    def seventh_button_clicked(self):
         """Метод, който се извиква при натискането на седмия бутон.
         Извършва ход в играта на позиция 6.
         """
         if self.onTurn == 1:
             self.t.commit_turn(6, "R")
+            self.first_player_time.sleep()
             if self.vsPC:
                 self.t.commit_turn(self.pc.get_turn(
                     self.t.matrix), "B")
+                self.first_player_time.start()
             else:
                 self.onTurn = 2
                 self.player.setText("B")
@@ -294,17 +323,20 @@ class TableWindow(QWidget):
             self.t.commit_turn(6, "B")
             self.player.setText("R")
             self.onTurn = 1
+            self.first_player_time.start()
         self.read_table()
 
-    def eigth_button_clicked(self):
+    def eighth_button_clicked(self):
         """Метод, който се извиква при натискането на осмият бутон.
         Извършва ход в играта на позиция 7.
         """
         if self.onTurn == 1:
             self.t.commit_turn(7, "R")
+            self.first_player_time.sleep()
             if self.vsPC:
                 self.t.commit_turn(self.pc.get_turn(
                     self.t.matrix), "B")
+                self.first_player_time.start()
             else:
                 self.onTurn = 2
                 self.player.setText("B")
@@ -312,17 +344,20 @@ class TableWindow(QWidget):
             self.t.commit_turn(7, "B")
             self.player.setText("R")
             self.onTurn = 1
+            self.first_player_time.start()
         self.read_table()
 
-    def nine_button_clicked(self):
+    def ninth_button_clicked(self):
         """Метод, който се извиква при натискането на деветия бутон.
         Извършва ход в играта на позиция 8.
         """
         if self.onTurn == 1:
             self.t.commit_turn(8, "R")
+            self.first_player_time.sleep()
             if self.vsPC:
                 self.t.commit_turn(self.pc.get_turn(
                     self.t.matrix), "B")
+                self.first_player_time.start()
             else:
                 self.onTurn = 2
                 self.player.setText("B")
@@ -330,17 +365,20 @@ class TableWindow(QWidget):
             self.t.commit_turn(8, "B")
             self.player.setText("R")
             self.onTurn = 1
+            self.first_player_time.start()
         self.read_table()
 
-    def ten_button_clicked(self):
+    def tenth_button_clicked(self):
         """Метод, който се извиква при натискането на десетия бутон.
         Извършва ход в играта на позиция 9.
         """
         if self.onTurn == 1:
             self.t.commit_turn(9, "R")
+            self.first_player_time.sleep()
             if self.vsPC:
                 self.t.commit_turn(self.pc.get_turn(
                     self.t.matrix), "B")
+                self.first_player_time.start()
             else:
                 self.onTurn = 2
                 self.player.setText("B")
@@ -348,6 +386,7 @@ class TableWindow(QWidget):
             self.t.commit_turn(9, "B")
             self.player.setText("R")
             self.onTurn = 1
+            self.first_player_time.start()
         self.read_table()
 
 if __name__ == '__main__':
